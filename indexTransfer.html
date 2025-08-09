@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</title>
+  <link rel="stylesheet" href="css/styleTransfer.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</h2>
+    <form id="transferForm" novalidate>
+      <fieldset>
+        <legend>ข้อมูลนักศึกษา</legend>
+        <label>วันที่:</label>
+        <input type="date" id="requestDate" required />
+        <label>เรียน คณบดีคณะ (คณะใหม่):</label>
+        <input type="text" id="newFacultyDean" required />
+        <label>ชื่อ–นามสกุล:</label>
+        <input type="text" id="fullname" required />
+        <label>รหัสนักศึกษา:</label>
+        <input type="text" id="studentId" required />
+        <label>เบอร์โทรศัพท์มือถือ:</label>
+        <input type="text" id="phone" required />
+        <label>ประเภทหลักสูตร:</label>
+        <select id="programType" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="4 ปี">4 ปี</option>
+          <option value="4 ปีเทียบเข้าเรียน (2 ปี)">4 ปีเทียบเข้าเรียน (2 ปี)</option>
+        </select>
+        <label>ภาค:</label>
+        <select id="semesterType" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="ภาคปกติ">ภาคปกติ</option>
+          <option value="ภาคสมทบ">ภาคสมทบ</option>
+        </select>
+        <label>สาขาวิชาเดิม:</label>
+        <input type="text" id="oldMajor" required />
+        <label>คณะเดิม:</label>
+        <input type="text" id="oldFaculty" required />
+        <label>สาขาวิชาที่ต้องการโอนย้าย:</label>
+        <input type="text" id="newMajor" required />
+        <label>เหตุผลในการโอนย้าย:</label>
+        <textarea id="reason" required></textarea>
+      </fieldset>
+
+      
+      <button type="submit">ส่งคำร้อง</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("transferForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const requiredFields = document.querySelectorAll("#transferForm [required]");
+      let valid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = "red";
+          valid = false;
+        } else {
+          field.style.borderColor = "#ccc";
+        }
+      });
+
+      if (valid) {
+        alert("ส่งคำร้องเรียบร้อยแล้ว ✅");
+      } else {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน ❗");
+      }
+    });
+  </script>
+</body>
+</html>

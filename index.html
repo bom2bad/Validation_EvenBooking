@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>จองตั๋วเข้าร่วมกิจกรรม</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+
+<div class="container">
+    <h2>ฟอร์มจองตั๋วกิจกรรม</h2>
+    <form id="eventForm">
+        <label>ชื่อ-นามสกุล:</label>
+        <input type="text" id="fullname">
+        <div id="errorName" class="error"></div>
+
+        <label>เบอร์โทรศัพท์:</label>
+        <input type="text" id="phone">
+        <div id="errorPhone" class="error"></div>
+
+        <label>ประเภทตั๋ว:</label>
+        <select id="ticketType">
+            <option value="ปกติ">ปกติ</option>
+            <option value="VIP">VIP</option>
+            <option value="Premium">Premium</option>
+        </select>
+
+        <label>จำนวนตั๋ว:</label>
+        <input type="number" id="ticketCount">
+        <div id="errorCount" class="error"></div>
+
+        <button type="submit">จอง</button>
+    </form>
+</div>
+
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <p id="modalText"></p>
+        <button onclick="closeModal()">ปิด</button>
+    </div>
+</div>
+
+<script>
+document.getElementById("eventForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let name = document.getElementById("fullname").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let type = document.getElementById("ticketType").value;
+    let count = parseInt(document.getElementById("ticketCount").value);
+
+    let valid = true;
+
+    
+    document.getElementById("errorName").textContent = "";
+    document.getElementById("errorPhone").textContent = "";
+    document.getElementById("errorCount").textContent = "";
+
+    
+    if (name.split(" ").length < 2) {
+        document.getElementById("errorName").textContent = "กรุณากรอกชื่อและนามสกุลอย่างน้อย 2 คำ";
+        valid = false;
+    }
+
+    if (!/^(0\d{9})$/.test(phone)) {
+        document.getElementById("errorPhone").textContent = "เบอร์โทรศัพท์ต้องมี 10 หลักและขึ้นต้นด้วย 0";
+        valid = false;
+    }
+
+    if (isNaN(count) || count < 1 || count > 5) {
+        document.getElementById("errorCount").textContent = "จำนวนตั๋วต้องอยู่ระหว่าง 1 ถึง 5";
+        valid = false;
+    }
+
+    if ((type === "VIP" || type === "Premium") && count < 2) {
+        document.getElementById("errorCount").textContent = "VIP หรือ Premium ต้องซื้อตั๋วอย่างน้อย 2 ใบ";
+        valid = false;
+    }
+
+    if (valid) {
+        document.getElementById("modalText").textContent = `จองสำเร็จ จำนวน: ${count} ประเภท: ${type}`;
+        document.getElementById("successModal").style.display = "flex";
+    }
+});
+
+function closeModal() {
+    document.getElementById("successModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
